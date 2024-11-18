@@ -9,6 +9,9 @@ export default {
       fontFamily: {
         Pretendard: ["Pretendard", "sans-serif"],
       },
+      fontFamily: {
+        helvetica: ["Helvetica Inserat LT Std", "sans-serif"], // 폰트 추가
+      },
     },
   },
   plugins: [],

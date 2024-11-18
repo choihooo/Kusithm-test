@@ -3,3 +3,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "Helvetica Inserat LT Std";
+  src: url("/HelveticaInseratLTStd-Roman.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}

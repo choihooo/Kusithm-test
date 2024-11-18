@@ -10,7 +10,6 @@ function Main() {
       className="flex flex-col items-center justify-between w-full h-screen bg-top bg-no-repeat"
       style={{ backgroundImage: `url('/Frame.svg')` }}
     >
-      {/* 로고 및 텍스트 */}
       <div className="flex flex-col items-center mt-[84px]">
         <img src={logo} alt="Logo" />
         <div className="mt-[54px] text-[1.25rem] font-semibold">
@@ -21,9 +20,10 @@ function Main() {
           불씨를 지펴보세요
         </div>
       </div>
-
-      {/* 버튼 */}
-      <button className="mb-[108px] bg-[#03A3FF] px-[112.5px] py-[15px] text-[1rem] rounded-[40px]">
+      <button
+        className="mb-[108px] bg-[#03A3FF] px-[112.5px] py-[15px] text-[1rem] rounded-[40px]"
+        onClick={() => navigate("/test")}
+      >
         테스트 하러 가기
       </button>
     </div>
