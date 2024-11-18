@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import NavBar from "../../components/NavBar";
+import NavBar from "../../components/NavBar.jsx";
 import NextButton from "../../components/NextButton.jsx";
-import Selection from "../../components/selection.jsx";
+import Selection from "../../components/Selection.jsx";
 
 const questions = [
   {
