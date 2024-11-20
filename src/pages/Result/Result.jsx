@@ -14,38 +14,29 @@ function Result() {
     }
   }, [result, navigate]);
 
-  // 이미지 로드 실패 방지 함수
-  const handleImageError = (event) => {
-    const imgElement = event.target;
-    if (!imgElement.dataset.failed) {
-      imgElement.dataset.failed = true; // 한 번만 대체 이미지로 교체
-      imgElement.src = "/placeholder.png"; // 대체 이미지 경로
-    } else {
-      console.error("Image failed to load again:", imgElement.src);
-    }
-  };
-
   const downloadCapture = () => {
     const captureElement = document.querySelector(".capture");
-    if (captureElement) {
+
+    const allImages = captureElement.querySelectorAll("img");
+    const imagePromises = Array.from(allImages).map((img) => {
+      return new Promise((resolve) => {
+        if (img.complete && img.naturalWidth > 0) {
+          resolve();
+        } else {
+          img.onload = resolve;
+          img.onerror = resolve;
+        }
+      });
+    });
+
+    Promise.all(imagePromises).then(() => {
       domtoimage
         .toPng(captureElement, {
-          cacheBust: true, // 캐싱된 리소스 무효화
-          filter: (node) => {
-            if (node.tagName === "IMG") {
-              const img = node;
-              return img.complete && img.naturalWidth > 0; // 로드된 이미지만 포함
-            }
-            return true;
-          },
-          useCors: true, // 외부 이미지 허용
+          cacheBust: true,
+          useCors: true,
           style: {
-            // 캡처 시 적용할 추가 스타일
             overflow: "visible",
           },
-          scale: 2, // 고해상도 캡처
-          width: captureElement.offsetWidth, // 캡처 대상의 너비
-          height: captureElement.offsetHeight + 50, // 캡처 대상의 높이
         })
         .then((dataUrl) => {
           const link = document.createElement("a");
@@ -56,7 +47,7 @@ function Result() {
         .catch((error) => {
           console.error("Error capturing the element:", error);
         });
-    }
+    });
   };
 
   if (!result) {
@@ -103,7 +94,7 @@ function Result() {
           <img
             src={result.imgUrl}
             alt={`${result.koreanName} 이미지`}
-            className="absolute w-[390px]  top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 object-contain"
+            className="absolute w-[390px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 object-contain"
           />
         </div>
 
