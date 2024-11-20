@@ -1,15 +1,18 @@
 import { Route, Routes } from "react-router-dom";
 import Main from "./pages/Main";
 import Test from "./pages/Test";
-import NavBar from "./components/NavBar";
+import Result from "./pages/Result";
+import { ResultProvider } from "./context/ResultContext";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Main />} />
-
-      <Route path="/test" element={<Test />} />
-    </Routes>
+    <ResultProvider>
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/result" element={<Result />} />
+        <Route path="/test" element={<Test />} />
+      </Routes>
+    </ResultProvider>
   );
 }
 
