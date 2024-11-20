@@ -98,12 +98,12 @@ function Result() {
           <img
             src="/Frame1.svg"
             alt="원소 바탕 이미지"
-            className="absolute w-full h-full"
+            className="absolute object-contain w-full h-full"
           />
           <img
             src={result.imgUrl}
             alt={`${result.koreanName} 이미지`}
-            className="absolute w-[390px]  top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+            className="absolute w-[390px]  top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 object-contain"
           />
         </div>
 
