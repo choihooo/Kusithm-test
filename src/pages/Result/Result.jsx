@@ -42,7 +42,6 @@ function Result() {
           style: {
             // 캡처 시 적용할 추가 스타일
             overflow: "visible",
-            backgroundColor: "#0a0a0a", // 캡처 배경색
           },
           scale: 2, // 고해상도 캡처
           width: captureElement.offsetWidth, // 캡처 대상의 너비
@@ -81,7 +80,7 @@ function Result() {
       </div>
 
       {/* 결과 내용 */}
-      <div className="mt-[20px] px-[32px] pt-[32px] border-none shadow-lg capture bg-[#0a0a0a] relative">
+      <div className="mt-[20px] px-[32px] pt-[32px] border-none shadow-lg capture bg-[#0a0a0a] relative w-[100%] max-w-[400px] overflow-visible">
         <div className="flex flex-col border-none text-[24px]">
           <p className="border-none ">협업할 때 당신은</p>
           <h2 className=" text-4xl font-bold border-none flex gap-[12px] items-center text-[#03A3FF]">
@@ -98,14 +97,13 @@ function Result() {
         <div className="absolute top-[80px] left-1/2 transform -translate-x-1/2 w-[390px] h-[390px]">
           <img
             src="/Frame1.svg"
-            alt={`원소 바탕 이미지`}
-            className="absolute w-full "
+            alt="원소 바탕 이미지"
+            className="absolute w-full h-full"
           />
           <img
             src={result.imgUrl}
             alt={`${result.koreanName} 이미지`}
-            className="w-[390px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-            onError={handleImageError} // 이미지 로드 실패 방지
+            className="absolute w-[390px]  top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
           />
         </div>
 
