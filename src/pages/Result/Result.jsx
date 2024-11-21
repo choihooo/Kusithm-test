@@ -37,6 +37,8 @@ function Result() {
           style: {
             overflow: "visible",
           },
+          width: captureElement.offsetWidth,
+          height: captureElement.offsetHeight + 50,
         })
         .then((dataUrl) => {
           const link = document.createElement("a");
