@@ -91,7 +91,7 @@ function Result() {
 
         <div className="absolute top-[80px] left-1/2 transform -translate-x-1/2 w-[340px] h-[340px]">
           <img
-            src="/Frame1.svg"
+            src="/Frame.png"
             alt="원소 바탕 이미지"
             className="absolute object-contain w-full h-full"
           />
