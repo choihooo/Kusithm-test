@@ -39,7 +39,7 @@ function Result() {
           },
 
           width: captureElement.offsetWidth * 2, // 너비를 2배로 설정
-          height: captureElement.offsetHeight + 50, // 높이를 2배로 설정
+          height: captureElement.offsetHeight * 2 + 50, // 높이를 2배로 설정
           scale: 2,
         })
         .then((dataUrl) => {
