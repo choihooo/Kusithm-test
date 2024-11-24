@@ -87,7 +87,7 @@ function Result() {
           {result.description}
         </p>
 
-        <div className="absolute top-[80px] left-1/2 transform -translate-x-1/2 w-[390px] h-[390px]">
+        <div className="absolute top-[80px] left-1/2 transform -translate-x-1/2 w-[340px] h-[340px]">
           <img
             src="/Frame1.svg"
             alt="원소 바탕 이미지"
@@ -96,7 +96,7 @@ function Result() {
           <img
             src={result.imgUrl}
             alt={`${result.koreanName} 이미지`}
-            className="absolute w-[390px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 object-contain"
+            className="absolute w-[340px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 object-contain"
           />
         </div>
 
