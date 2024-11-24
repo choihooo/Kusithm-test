@@ -17,6 +17,11 @@ function Result() {
   const downloadCapture = () => {
     const captureElement = document.querySelector(".capture");
 
+    if (!captureElement) {
+      console.error("Capture element not found.");
+      return;
+    }
+
     const allImages = captureElement.querySelectorAll("img");
     const imagePromises = Array.from(allImages).map((img) => {
       return new Promise((resolve) => {
