@@ -6,7 +6,7 @@ import { useResult } from "../../context/ResultContext";
 function Result() {
   const { result } = useResult();
   const navigate = useNavigate();
-
+  const [trigger, setTrigger] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
@@ -15,6 +15,16 @@ function Result() {
       navigate("/"); // 데이터가 없으면 메인 화면으로 이동
     }
   }, [result, navigate]);
+
+  useEffect(() => {
+    if (imageLoaded) {
+      downloadCapture();
+    }
+  }, [imageLoaded]); // 이미지가 로드되면 downloadCapture를 자동으로 호출
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
 
   const downloadCapture = () => {
     const captureElement = document.querySelector(".capture");
@@ -39,8 +49,12 @@ function Result() {
         const link = document.createElement("a");
         link.href = dataUrl;
         link.download = `${result.koreanName || "result"}.png`;
-        link.click();
-        setImageLoaded(false); // 다운로드 후 이미지 로드 상태를 초기화
+        if (!trigger) {
+          setTrigger(true);
+        } else {
+          link.click();
+          setImageLoaded(false); // 다운로드 후 이미지 로드 상태를 초기화
+        }
       })
       .catch((error) => {
         console.error("Error capturing the element:", error);
@@ -88,6 +102,7 @@ function Result() {
             alt="원소 바탕 이미지"
             className="absolute object-contain w-full h-full"
             crossOrigin="anonymous"
+            onLoad={handleImageLoad}
           />
           <img
             src={result.imgUrl}
