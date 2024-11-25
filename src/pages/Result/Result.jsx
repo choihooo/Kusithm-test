@@ -6,6 +6,7 @@ import { useResult } from "../../context/ResultContext";
 function Result() {
   const { result } = useResult();
   const navigate = useNavigate();
+
   const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
@@ -15,11 +16,20 @@ function Result() {
     }
   }, [result, navigate]);
 
+  useEffect(() => {
+    if (imageLoaded) {
+      downloadCapture();
+    }
+  }, [imageLoaded]); // 이미지가 로드되면 downloadCapture를 자동으로 호출
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
+
   const downloadCapture = () => {
     const captureElement = document.querySelector(".capture");
-
-    if (!captureElement || !imageLoaded) {
-      console.error("Capture element not found or image not loaded.");
+    if (!captureElement) {
+      console.error("Capture element not found.");
       return;
     }
 
@@ -30,10 +40,10 @@ function Result() {
         style: {
           quality: 0.99,
           overflow: "visible",
-          objectFit: "cover", // 이미지가 요소를 꽉 채우도록 설정
+          objectFit: "cover",
         },
-        width: captureElement.offsetWidth, // 너비를 2배로 설정
-        height: captureElement.offsetHeight, // 높이를 2배로 설정
+        width: captureElement.offsetWidth,
+        height: captureElement.offsetHeight,
         scale: 2,
       })
       .then((dataUrl) => {
@@ -41,14 +51,11 @@ function Result() {
         link.href = dataUrl;
         link.download = `${result.koreanName || "result"}.png`;
         link.click();
+        setImageLoaded(false); // 다운로드 후 이미지 로드 상태를 초기화
       })
       .catch((error) => {
         console.error("Error capturing the element:", error);
       });
-  };
-
-  const handleImageLoad = () => {
-    setImageLoaded(true);
   };
 
   if (!result) {
@@ -90,13 +97,11 @@ function Result() {
           <img
             src="/Frame.png"
             alt="원소 바탕 이미지"
-            onLoad={handleImageLoad}
             className="absolute object-contain w-full h-full"
           />
           <img
             src={result.imgUrl}
             alt={`${result.koreanName} 이미지`}
-            onLoad={handleImageLoad}
             className="absolute w-[340px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 object-contain"
           />
         </div>
