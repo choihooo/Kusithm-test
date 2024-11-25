@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import domtoimage from "dom-to-image-more";
 import { useResult } from "../../context/ResultContext";
@@ -6,6 +6,7 @@ import { useResult } from "../../context/ResultContext";
 function Result() {
   const { result } = useResult();
   const navigate = useNavigate();
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
     if (!result) {
@@ -17,46 +18,37 @@ function Result() {
   const downloadCapture = () => {
     const captureElement = document.querySelector(".capture");
 
-    if (!captureElement) {
-      console.error("Capture element not found.");
+    if (!captureElement || !imageLoaded) {
+      console.error("Capture element not found or image not loaded.");
       return;
     }
 
-    const allImages = captureElement.querySelectorAll("img");
-    const imagePromises = Array.from(allImages).map((img) => {
-      return new Promise((resolve) => {
-        if (img.complete && img.naturalWidth > 0) {
-          resolve();
-        } else {
-          img.onload = resolve;
-          img.onerror = resolve;
-        }
+    domtoimage
+      .toPng(captureElement, {
+        cacheBust: true,
+        useCors: true,
+        style: {
+          quality: 0.99,
+          overflow: "visible",
+          objectFit: "cover", // 이미지가 요소를 꽉 채우도록 설정
+        },
+        width: captureElement.offsetWidth, // 너비를 2배로 설정
+        height: captureElement.offsetHeight, // 높이를 2배로 설정
+        scale: 2,
+      })
+      .then((dataUrl) => {
+        const link = document.createElement("a");
+        link.href = dataUrl;
+        link.download = `${result.koreanName || "result"}.png`;
+        link.click();
+      })
+      .catch((error) => {
+        console.error("Error capturing the element:", error);
       });
-    });
+  };
 
-    Promise.all(imagePromises).then(() => {
-      domtoimage
-        .toPng(captureElement, {
-          cacheBust: true,
-          useCors: true,
-          style: {
-            overflow: "visible",
-          },
-
-          width: captureElement.offsetWidth * 2, // 너비를 2배로 설정
-          height: captureElement.offsetHeight * 2 + 50, // 높이를 2배로 설정
-          scale: 2,
-        })
-        .then((dataUrl) => {
-          const link = document.createElement("a");
-          link.href = dataUrl;
-          link.download = `${result.koreanName || "result"}.png`;
-          link.click();
-        })
-        .catch((error) => {
-          console.error("Error capturing the element:", error);
-        });
-    });
+  const handleImageLoad = () => {
+    setImageLoaded(true);
   };
 
   if (!result) {
@@ -80,7 +72,7 @@ function Result() {
       </div>
 
       {/* 결과 내용 */}
-      <div className="mt-[20px] px-[32px] pt-[32px] border-none shadow-lg capture bg-[#0a0a0a] relative w-[100%] max-w-[400px] overflow-visible">
+      <div className="mt-[20px] px-[32px] py-[32px] border-none shadow-lg capture bg-[#0a0a0a] relative w-[100%] max-w-[400px] overflow-visible">
         <div className="flex flex-col border-none text-[24px]">
           <p className="border-none ">협업할 때 당신은</p>
           <h2 className=" text-4xl font-bold border-none flex gap-[12px] items-center text-[#03A3FF]">
@@ -98,11 +90,13 @@ function Result() {
           <img
             src="/Frame.png"
             alt="원소 바탕 이미지"
+            onLoad={handleImageLoad}
             className="absolute object-contain w-full h-full"
           />
           <img
             src={result.imgUrl}
             alt={`${result.koreanName} 이미지`}
+            onLoad={handleImageLoad}
             className="absolute w-[340px] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 object-contain"
           />
         </div>
@@ -125,7 +119,7 @@ function Result() {
       </div>
 
       {/* 버튼 */}
-      <div className="flex gap-[12px] px-[12px] py-[12px] mt-[35px] mb-[28px] w-full items-center justify-center overflow-x-auto">
+      <div className="flex gap-[12px] px-[12px] py-[12px] mt-[3px] mb-[28px] w-full items-center justify-center overflow-x-auto">
         <button
           onClick={() => navigate("/test")}
           className="text-white text-[14px] rounded-lg px-[6px] py-[15px] h-[50px] whitespace-nowrap"
