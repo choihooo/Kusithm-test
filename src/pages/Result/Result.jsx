@@ -108,7 +108,7 @@ function Result() {
         <div className="w-full p-[16px] mt-[20px] text-[#DADADA] border-none rounded-lg bg-[#232323]">
           <div className="flex gap-[8px] text-[14px] border-none">
             <img
-              src="/Vector.svg"
+              src="/Vector.png"
               className="w-[16px] h-[19px] inline-block object-contain"
             />
             <div className="w-full">잘 맞는 원소</div>
