@@ -101,7 +101,6 @@ function Result() {
             src="/Frame.png"
             alt="원소 바탕 이미지"
             className="absolute object-contain w-full h-full"
-            crossOrigin="anonymous"
             onLoad={handleImageLoad}
           />
           <img
