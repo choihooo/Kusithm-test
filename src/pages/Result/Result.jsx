@@ -40,9 +40,8 @@ function Result() {
         style: {
           quality: 0.99,
           overflow: "visible",
-          objectFit: "cover",
         },
-        width: captureElement.offsetWidth + 15,
+        width: captureElement.offsetWidth,
         height: captureElement.offsetHeight,
         scale: 2,
       })
@@ -97,7 +96,7 @@ function Result() {
           <img
             src="/Frame.png"
             alt="원소 바탕 이미지"
-            className="absolute object-contain w-[340px] "
+            className="absolute object-contain w-full h-full"
           />
           <img
             src={result.imgUrl}
