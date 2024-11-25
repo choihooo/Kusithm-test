@@ -16,16 +16,6 @@ function Result() {
     }
   }, [result, navigate]);
 
-  useEffect(() => {
-    if (imageLoaded) {
-      downloadCapture();
-    }
-  }, [imageLoaded]); // 이미지가 로드되면 downloadCapture를 자동으로 호출
-
-  const handleImageLoad = () => {
-    setImageLoaded(true);
-  };
-
   const downloadCapture = () => {
     const captureElement = document.querySelector(".capture");
     if (!captureElement) {
@@ -98,7 +88,6 @@ function Result() {
             alt="원소 바탕 이미지"
             className="absolute object-contain w-full h-full"
             crossOrigin="anonymous"
-            onLoad={handleImageLoad}
           />
           <img
             src={result.imgUrl}
