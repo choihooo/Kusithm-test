@@ -97,7 +97,7 @@ function Result() {
           <img
             src="/Frame.png"
             alt="원소 바탕 이미지"
-            className="absolute object-contain w-full h-full"
+            className="absolute object-contain w-[339px] "
           />
           <img
             src={result.imgUrl}
@@ -132,7 +132,7 @@ function Result() {
           테스트 다시하기
         </button>
         <button
-          onClick={downloadCapture}
+          onClick={handleImageLoad}
           className="text-white bg-[#03A3FF] rounded-[40px] flex items-center justify-center px-[45.5px] py-[15px] h-[50px] whitespace-nowrap"
         >
           이미지 다운받기 <img src="/download.svg" className="ml-2" />
