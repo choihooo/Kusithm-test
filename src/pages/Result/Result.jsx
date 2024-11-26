@@ -90,7 +90,7 @@ function Result() {
 
   if (!result) {
     return (
-      <div className="flex items-center justify-center min-h-screen text-white bg-black">
+      <div className="flex items-center justify-center min-h-screen text-white bg-[#0a0a0a]">
         <p>결과를 불러올 수 없습니다. 테스트를 다시 시도해주세요.</p>
       </div>
     );
