@@ -59,7 +59,10 @@ function Test() {
   return (
     <>
       <NavBar />
-      <div className="min-h-screen text-white bg-black">
+      <div
+        className="flex flex-col justify-between text-white bg-black "
+        style={{ height: `calc(100vh - 52px)` }}
+      >
         {/* 질문 */}
         <div className="mt-[80px] flex flex-col items-center">
           <h1 className="text-[24px] font-bold text-center font-helvetica">
@@ -71,24 +74,26 @@ function Test() {
         </div>
 
         {/* 선택 */}
-        <div className="flex flex-col gap-[12px] mt-[195px] px-[24px] w-full">
-          {questions[currentQuestion].options.map((option, index) => (
-            <Selection
-              key={index}
-              text={option}
-              isSelected={selectedOption === index + 1}
-              onClick={() => handleAnswer(index)}
-            />
-          ))}
-        </div>
+        <div>
+          <div className="flex flex-col gap-[12px] px-[24px] w-full">
+            {questions[currentQuestion].options.map((option, index) => (
+              <Selection
+                key={index}
+                text={option}
+                isSelected={selectedOption === index + 1}
+                onClick={() => handleAnswer(index)}
+              />
+            ))}
+          </div>
 
-        {/* 다음 버튼 */}
-        <div className="flex items-center justify-center w-full px-[24px] mt-[54px] pb-[60px]">
-          <NextButton
-            isDisabled={selectedOption === null}
-            onClick={handleNext}
-            isLastQuestion={currentQuestion === questions.length - 1}
-          />
+          {/* 다음 버튼 */}
+          <div className="flex items-center justify-center w-full px-[24px] mt-[80px] pb-[60px]">
+            <NextButton
+              isDisabled={selectedOption === null}
+              onClick={handleNext}
+              isLastQuestion={currentQuestion === questions.length - 1}
+            />
+          </div>
         </div>
       </div>
     </>
