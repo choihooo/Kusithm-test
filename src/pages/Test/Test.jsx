@@ -57,10 +57,10 @@ function Test() {
   };
 
   return (
-    <>
+    <div className="flex flex-col items-center justify-center">
       <NavBar />
       <div
-        className="flex flex-col justify-between text-white bg-black "
+        className="flex flex-col justify-between items-center text-white bg-black max-w-[480px]"
         style={{ height: `calc(100vh - 52px)` }}
       >
         {/* 질문 */}
@@ -96,7 +96,7 @@ function Test() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
