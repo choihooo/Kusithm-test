@@ -56,9 +56,16 @@ function Test() {
     }
   };
 
+  const onBack = () => {
+    if (currentQuestion > 0) {
+      setCurrentQuestion(currentQuestion - 1);
+      setSelectedOption(answers[currentQuestion - 1] || null);
+    }
+  };
+
   return (
     <div className="flex flex-col items-center justify-center">
-      <NavBar />
+      <NavBar onBack={onBack} />
       <div
         className="flex flex-col justify-between items-center text-white max-w-[480px]"
         style={{ height: `calc(100vh - 52px)` }}
@@ -75,7 +82,7 @@ function Test() {
 
         {/* 선택 */}
         <div>
-          <div className="flex flex-col gap-[12px] px-[24px] w-full">
+          <div className="flex flex-col gap-[12px] w-[342px]">
             {questions[currentQuestion].options.map((option, index) => (
               <Selection
                 key={index}
@@ -87,7 +94,7 @@ function Test() {
           </div>
 
           {/* 다음 버튼 */}
-          <div className="flex items-center justify-center w-full px-[24px] mt-[80px] pb-[60px]">
+          <div className="flex items-center justify-center w-[342px] mt-[80px] pb-[60px]">
             <NextButton
               isDisabled={selectedOption === null}
               onClick={handleNext}

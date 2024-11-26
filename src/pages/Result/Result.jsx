@@ -97,7 +97,7 @@ function Result() {
   }
 
   return (
-    <div className="flex flex-col items-center min-h-screen text-white">
+    <div className="flex flex-col items-center min-h-screen bg-[#0a0a0a] text-white">
       {/* 헤더 */}
       <div className="h-[52px] flex items-center justify-between w-full px-4 py-4">
         <button className="absolute left-4 " onClick={() => navigate("/")}>
