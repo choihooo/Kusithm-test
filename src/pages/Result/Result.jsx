@@ -61,6 +61,33 @@ function Result() {
       });
   };
 
+  function StyledText({ text }) {
+    const regex = /(\d+|[^\d]+)/g;
+    const parts = text.match(regex);
+
+    return (
+      <span>
+        {parts.map((part, index) =>
+          /\d/.test(part) ? (
+            <span key={index} style={{ fontSize: "14px", lineHeight: "14px" }}>
+              {part}
+            </span>
+          ) : (
+            <span key={index} style={{ fontSize: "30px", lineHeight: "30px" }}>
+              {part}
+            </span>
+          )
+        )}
+      </span>
+    );
+  }
+
+  const getWidthFromNameLength = (name) => {
+    const perCharacterWidth = 32; // 문자당 너비
+
+    return `${name.length * perCharacterWidth}px`;
+  };
+
   if (!result) {
     return (
       <div className="flex items-center justify-center min-h-screen text-white bg-black">
@@ -85,9 +112,11 @@ function Result() {
       <div className="mt-[20px] px-[32px] py-[32px] border-none shadow-lg capture bg-[#0a0a0a] relative w-[100%] max-w-[400px] overflow-visible">
         <div className="flex flex-col border-none text-[24px]">
           <p className="border-none ">협업할 때 당신은</p>
-          <h2 className=" text-4xl font-bold border-none flex gap-[12px] items-center text-[#03A3FF]">
-            {result.koreanName}
-            <span className=" text-primary">{result.englishName}</span>
+          <h2 className=" text-4xl w-full font-bold border-none flex gap-[12px] items-center text-[#03A3FF]">
+            <span style={{ width: getWidthFromNameLength(result.koreanName) }}>
+              {result.koreanName}
+            </span>
+            <StyledText text={result.englishName} />
           </h2>
           <p className="text-[24px] border-none">같은 사람이에요</p>
         </div>
