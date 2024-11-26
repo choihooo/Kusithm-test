@@ -65,7 +65,7 @@ function Test() {
           <h1 className="text-[24px] font-bold text-center font-helvetica">
             Q{questions[currentQuestion].id}.
           </h1>
-          <p className="mt-[12px] text-[20px] text-center whitespace-pre-line">
+          <p className="mt-[12px] text-[20px] font-semibold text-center whitespace-pre-line">
             {questions[currentQuestion].question}
           </p>
         </div>
