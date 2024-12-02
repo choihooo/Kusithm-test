@@ -34,7 +34,7 @@ function Result() {
     }
 
     domtoimage
-      .toPng(captureElement, {
+      .toBlob(captureElement, {
         cacheBust: true,
         useCors: true,
         style: {
@@ -43,17 +43,35 @@ function Result() {
         },
         width: captureElement.offsetWidth,
         height: captureElement.offsetHeight,
-        scale: 2,
+        scale: 2, // 이미지 크기 조정
       })
-      .then((dataUrl) => {
-        const link = document.createElement("a");
-        link.href = dataUrl;
-        link.download = `${result.koreanName || "result"}.png`;
-        if (!trigger) {
-          setTrigger(true);
+      .then((blob) => {
+        // 모바일 브라우저 감지
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+        if (isMobile) {
+          // 새 탭에 Blob URL 열기
+          const blobUrl = URL.createObjectURL(blob);
+
+          if (!trigger) {
+            setTrigger(true); // 트리거 상태 업데이트
+          } else {
+            window.open(blobUrl, "_blank");
+            setTrigger(false); // 트리거 리셋
+          }
         } else {
-          link.click();
-          setImageLoaded(false); // 다운로드 후 이미지 로드 상태를 초기화
+          // PC 브라우저에서 다운로드 처리
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = `${result.koreanName || "result"}.png`;
+
+          if (!trigger) {
+            setTrigger(true); // 트리거 상태 업데이트
+          } else {
+            link.click();
+            URL.revokeObjectURL(link.href);
+            setTrigger(false); // 트리거 리셋
+          }
         }
       })
       .catch((error) => {
