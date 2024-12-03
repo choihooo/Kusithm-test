@@ -83,7 +83,7 @@ function Result() {
   }
 
   const getWidthFromNameLength = (name) => {
-    const perCharacterWidth = 32; // 문자당 너비
+    const perCharacterWidth = 35; // 문자당 너비
 
     return `${name.length * perCharacterWidth}px`;
   };
@@ -99,7 +99,7 @@ function Result() {
   return (
     <div className="flex flex-col items-center min-h-screen bg-[#0a0a0a] text-white">
       {/* 헤더 */}
-      <div className="h-[52px] flex items-center justify-between w-full px-4 py-4">
+      <div className="h-[52px] flex items-center justify-between w-full px-4 py-4 bg-[#0a0a0a]">
         <button className="absolute left-4 " onClick={() => navigate("/")}>
           <img src="/left.svg" alt="뒤로 가기" className="w-6 h-6" />
         </button>
