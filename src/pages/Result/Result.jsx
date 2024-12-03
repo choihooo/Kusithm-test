@@ -34,7 +34,7 @@ function Result() {
     }
 
     domtoimage
-      .toBlob(captureElement, {
+      .toPng(captureElement, {
         cacheBust: true,
         useCors: true,
         style: {
@@ -43,39 +43,17 @@ function Result() {
         },
         width: captureElement.offsetWidth,
         height: captureElement.offsetHeight,
-        scale: 2, // 이미지 크기 조정
+        scale: 2,
       })
-      .then((blob) => {
-        // 모바일 브라우저 감지
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-        const blobUrl = URL.createObjectURL(blob);
-
-        if (isMobile) {
-          // 모바일: Blob URL 열기
-          if (!trigger) {
-            setTrigger(true); // 트리거 상태 업데이트
-          } else {
-            const tempAnchor = document.createElement("a");
-            tempAnchor.href = blobUrl;
-            tempAnchor.target = "_blank"; // 새 창에서 열기
-            tempAnchor.click();
-            URL.revokeObjectURL(blobUrl);
-            setTrigger(false); // 트리거 리셋
-          }
+      .then((dataUrl) => {
+        const link = document.createElement("a");
+        link.href = dataUrl;
+        link.download = `${result.koreanName || "result"}.png`;
+        if (!trigger) {
+          setTrigger(true);
         } else {
-          // PC: 다운로드 처리
-          const link = document.createElement("a");
-          link.href = blobUrl;
-          link.download = `${result.koreanName || "result"}.png`;
-
-          if (!trigger) {
-            setTrigger(true); // 트리거 상태 업데이트
-          } else {
-            link.click();
-            URL.revokeObjectURL(blobUrl);
-            setTrigger(false); // 트리거 리셋
-          }
+          link.click();
+          setImageLoaded(false); // 다운로드 후 이미지 로드 상태를 초기화
         }
       })
       .catch((error) => {
@@ -105,7 +83,7 @@ function Result() {
   }
 
   const getWidthFromNameLength = (name) => {
-    const perCharacterWidth = 32; // 문자당 너비
+    const perCharacterWidth = 35; // 문자당 너비
 
     return `${name.length * perCharacterWidth}px`;
   };
@@ -121,7 +99,7 @@ function Result() {
   return (
     <div className="flex flex-col items-center min-h-screen bg-[#0a0a0a] text-white">
       {/* 헤더 */}
-      <div className="h-[52px] flex items-center justify-between w-full px-4 py-4">
+      <div className="h-[52px] flex items-center justify-between w-full px-4 py-4 bg-[#0a0a0a]">
         <button className="absolute left-4 " onClick={() => navigate("/")}>
           <img src="/left.svg" alt="뒤로 가기" className="w-6 h-6" />
         </button>
