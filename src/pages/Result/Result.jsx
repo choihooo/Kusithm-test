@@ -109,7 +109,7 @@ function Result() {
       </div>
 
       {/* 결과 내용 */}
-      <div className="pt-[52px] pb-[32px] py-[32px] border-none shadow-lg capture bg-[#0a0a0a] relative max-w-[400px] overflow-visible">
+      <div className="pt-[52px] px-[32px] pb-[32px] border-none shadow-lg capture bg-[#0a0a0a] relative max-w-[400px] overflow-visible">
         <div className="flex flex-col border-none text-[24px]">
           <p className="border-none ">협업할 때 당신은</p>
           <h2 className=" text-4xl w-full font-bold border-none flex gap-[12px] items-center text-[#03A3FF]">
