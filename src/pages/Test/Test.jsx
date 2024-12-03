@@ -32,7 +32,7 @@ function Test() {
     } else {
       const finalAnswers = [...answers, selectedOption];
 
-      fetch("https://kusitms-exhibition.store/api/v1/elements", {
+      fetch("https://kusitms-exhibition-test.store/api/v1/elements", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
