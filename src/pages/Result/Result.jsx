@@ -49,27 +49,31 @@ function Result() {
         // 모바일 브라우저 감지
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-        if (isMobile) {
-          // 새 탭에 Blob URL 열기
-          const blobUrl = URL.createObjectURL(blob);
+        const blobUrl = URL.createObjectURL(blob);
 
+        if (isMobile) {
+          // 모바일: Blob URL 열기
           if (!trigger) {
             setTrigger(true); // 트리거 상태 업데이트
           } else {
-            window.open(blobUrl, "_blank");
+            const tempAnchor = document.createElement("a");
+            tempAnchor.href = blobUrl;
+            tempAnchor.target = "_blank"; // 새 창에서 열기
+            tempAnchor.click();
+            URL.revokeObjectURL(blobUrl);
             setTrigger(false); // 트리거 리셋
           }
         } else {
-          // PC 브라우저에서 다운로드 처리
+          // PC: 다운로드 처리
           const link = document.createElement("a");
-          link.href = URL.createObjectURL(blob);
+          link.href = blobUrl;
           link.download = `${result.koreanName || "result"}.png`;
 
           if (!trigger) {
             setTrigger(true); // 트리거 상태 업데이트
           } else {
             link.click();
-            URL.revokeObjectURL(link.href);
+            URL.revokeObjectURL(blobUrl);
             setTrigger(false); // 트리거 리셋
           }
         }
